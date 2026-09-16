@@ -1,0 +1,918 @@
+<title>Atelier AgaNews</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Literata:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --paper: #E7EEF2;
+    --paper-raised: #F4F8FA;
+    --card-bg: #FFFFFF;
+    --ink: #142A34;
+    --ink-soft: #45606D;
+    --accent: #C85024;
+    --accent-ink: #7A2E14;
+    --line-blue: #4A7E9C;
+    --line: rgba(20,42,52,0.18);
+    --ok: #2C7A5F;
+    --ok-soft: rgba(44,122,95,0.12);
+    --code-bg: #0F2530;
+    --code-ink: #CFE3EC;
+    --code-accent: #FFB27A;
+    --font-display: "Big Shoulders Display", "Arial Narrow", sans-serif;
+    --font-body: "Literata", Georgia, "Times New Roman", serif;
+    --font-mono: "IBM Plex Mono", "Courier New", monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0C1B22;
+      --paper-raised: #12242D;
+      --card-bg: #142832;
+      --ink: #E1ECF1;
+      --ink-soft: #9FB9C6;
+      --accent: #FF8952;
+      --accent-ink: #FFD3BB;
+      --line-blue: #6BA9CB;
+      --line: rgba(225,236,241,0.16);
+      --ok: #5FCBA9;
+      --ok-soft: rgba(95,203,169,0.14);
+      --code-bg: #081217;
+      --code-ink: #BFE0EC;
+      --code-accent: #FFB27A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #0C1B22;
+    --paper-raised: #12242D;
+    --card-bg: #142832;
+    --ink: #E1ECF1;
+    --ink-soft: #9FB9C6;
+    --accent: #FF8952;
+    --accent-ink: #FFD3BB;
+    --line-blue: #6BA9CB;
+    --line: rgba(225,236,241,0.16);
+    --ok: #5FCBA9;
+    --ok-soft: rgba(95,203,169,0.14);
+    --code-bg: #081217;
+    --code-ink: #BFE0EC;
+    --code-accent: #FFB27A;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 28px 28px;
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16.5px;
+    line-height: 1.65;
+    padding: 0 16px;
+  }
+
+  .wrap { max-width: 760px; margin: 0 auto; padding-block: 28px 80px; }
+
+  a { color: var(--accent); }
+
+  h1, h2, h3 { font-family: var(--font-display); text-transform: uppercase; text-wrap: balance; line-height: 1.02; margin: 0; }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--line-blue);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .eyebrow::before { content: "+"; font-weight: 700; }
+
+  header.hero {
+    padding-bottom: 22px;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 24px;
+  }
+  header.hero h1 {
+    font-size: clamp(2.4rem, 9vw, 3.6rem);
+    font-weight: 900;
+    margin: 6px 0 12px;
+    color: var(--ink);
+  }
+  header.hero h1 span { color: var(--accent); }
+  header.hero p.lede {
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    max-width: 60ch;
+    margin: 0 0 18px;
+  }
+
+  .howto {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--line-blue);
+    padding: 14px 16px;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+  .howto strong { color: var(--ink); }
+  .howto ol { margin: 8px 0 0; padding-left: 20px; }
+  .howto li { margin-bottom: 4px; }
+
+  /* progress bar */
+  .progress-block {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 5;
+    background: var(--paper);
+    padding: 10px 0 14px;
+    margin: 0 0 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .progress-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+  #reset-progress {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--ink-soft);
+    padding: 3px 8px;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  #reset-progress:hover { border-color: var(--accent); color: var(--accent); }
+  .progress-track {
+    height: 6px;
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--line-blue), var(--accent));
+    transition: width 0.3s ease;
+  }
+
+  /* TOC */
+  .toc-title { font-size: 1rem; margin-bottom: 10px; color: var(--ink-soft); letter-spacing: 0.05em; }
+  .toc {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-bottom: 40px;
+    list-style: none;
+    padding: 0;
+  }
+  @media (min-width: 560px) {
+    .toc { grid-template-columns: repeat(3, 1fr); }
+  }
+  .toc li a {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--card-bg);
+    border: 1px solid var(--line);
+    padding: 8px 10px;
+    font-size: 0.82rem;
+    font-family: var(--font-mono);
+    border-radius: 3px;
+  }
+  .toc li a:hover { border-color: var(--accent); }
+  .toc-dot {
+    width: 8px; height: 8px; min-width: 8px;
+    margin-top: 4px;
+    border-radius: 50%;
+    border: 1.5px solid var(--line-blue);
+    background: transparent;
+  }
+  .toc-dot.is-done { background: var(--ok); border-color: var(--ok); }
+
+  /* module sections */
+  section.module {
+    position: relative;
+    background: var(--card-bg);
+    border: 1px solid var(--line);
+    padding: 26px 22px 24px;
+    margin-bottom: 26px;
+    scroll-margin-top: 90px;
+  }
+  section.module::before, section.module::after,
+  section.module .tick-br, section.module .tick-bl {
+    content: "";
+    position: absolute;
+    width: 14px; height: 14px;
+    pointer-events: none;
+  }
+  section.module::before {
+    top: -1px; left: -1px;
+    border-top: 2px solid var(--line-blue);
+    border-left: 2px solid var(--line-blue);
+  }
+  section.module::after {
+    top: -1px; right: -1px;
+    border-top: 2px solid var(--line-blue);
+    border-right: 2px solid var(--line-blue);
+  }
+  section.module.is-done { border-color: var(--ok); }
+  section.module.is-done::before, section.module.is-done::after {
+    border-color: var(--ok);
+  }
+
+  .module-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+  .module-num {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--line-blue);
+    letter-spacing: 0.08em;
+  }
+  section.module h2 {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .module-sub {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 2px 0 16px;
+  }
+
+  section.module p { margin: 0 0 14px; }
+  section.module ul, section.module ol { margin: 0 0 14px; padding-left: 22px; }
+  section.module li { margin-bottom: 5px; }
+  section.module strong { color: var(--accent-ink); }
+
+  .card-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--line-blue);
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  pre {
+    background: var(--code-bg);
+    color: var(--code-ink);
+    padding: 14px 16px;
+    overflow-x: auto;
+    border-radius: 4px;
+    margin: 0 0 16px;
+    font-size: 0.86rem;
+    border: 1px solid var(--line);
+  }
+  code {
+    font-family: var(--font-mono);
+  }
+  :not(pre) > code {
+    background: var(--paper-raised);
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    font-size: 0.88em;
+  }
+  pre code { background: none; padding: 0; }
+  .tok-kw { color: var(--code-accent); }
+
+  .exercise {
+    background: var(--paper-raised);
+    border: 1px dashed var(--line-blue);
+    padding: 16px 16px 14px;
+    margin: 18px 0 0;
+  }
+  .exercise .card-label { color: var(--accent); }
+  .exercise p:last-child, .exercise ul:last-child, .exercise ol:last-child { margin-bottom: 0; }
+
+  details.hint {
+    margin-top: 12px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    background: var(--card-bg);
+  }
+  details.hint summary {
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding: 9px 12px;
+    list-style: none;
+  }
+  details.hint summary::-webkit-details-marker { display: none; }
+  details.hint summary::before { content: "▸ "; color: var(--accent); }
+  details.hint[open] summary::before { content: "▾ "; }
+  details.hint .hint-body {
+    padding: 0 14px 14px;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+  details.hint .hint-body p:last-child { margin-bottom: 0; }
+
+  .done-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+  }
+  .done-row input[type="checkbox"] {
+    width: 16px; height: 16px;
+    accent-color: var(--ok);
+    cursor: pointer;
+  }
+  .done-row label { cursor: pointer; }
+
+  .callout {
+    background: var(--ok-soft);
+    border-left: 4px solid var(--ok);
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    margin: 0 0 14px;
+  }
+  .warn {
+    background: rgba(200,80,36,0.1);
+    border-left: 4px solid var(--accent);
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    margin: 0 0 14px;
+  }
+
+  table.spec { width: 100%; border-collapse: collapse; margin: 0 0 16px; font-size: 0.88rem; }
+  table.spec th, table.spec td { text-align: left; padding: 6px 10px 6px 0; border-bottom: 1px solid var(--line); }
+  table.spec th { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); }
+
+  .tree {
+    font-family: var(--font-mono);
+    font-size: 0.84rem;
+    background: var(--code-bg);
+    color: var(--code-ink);
+    padding: 14px 16px;
+    border-radius: 4px;
+    white-space: pre;
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    margin: 0 0 16px;
+  }
+
+  footer.outro {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 2px solid var(--ink);
+  }
+  footer.outro h2 { font-size: 1.5rem; margin-bottom: 10px; }
+  footer.outro p { color: var(--ink-soft); max-width: 52ch; margin: 0 auto; }
+</style>
+
+<div class="wrap">
+
+  <header class="hero">
+    <p class="eyebrow">Parcours d'apprentissage — 14 chantiers</p>
+    <h1>Atelier<br><span>AgaNews</span></h1>
+    <p class="lede">
+      Construis toi-même, pas à pas, ton site d'actualités où chaque article est un fichier markdown.
+      Pas de code prêt à copier ici : des concepts, des exercices, et des indices si tu bloques.
+      À toi d'écrire chaque fichier.
+    </p>
+    <div class="howto">
+      <strong>Comment utiliser ce cours</strong>
+      <ol>
+        <li>Travaille dans un dossier séparé de ton vrai projet (un « bac à sable »), pour ne pas avoir peur de te tromper.</li>
+        <li>Pour chaque chantier : lis le concept, essaie l'exercice <em>seul</em>, n'ouvre l'indice qu'en dernier recours.</li>
+        <li>Coche la case en bas de chaque chantier quand c'est fait — ta progression est sauvegardée dans ce navigateur.</li>
+        <li>Bloqué sur un bug précis ou tu veux une relecture ? Reviens me voir dans le chat avec ce que tu as écrit — je corrige et j'explique, je n'écris pas à ta place.</li>
+      </ol>
+    </div>
+  </header>
+
+  <div class="progress-block">
+    <div class="progress-row">
+      <span id="progress-label">0 / 14 étapes terminées</span>
+      <button id="reset-progress" type="button">réinitialiser</button>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+  </div>
+
+  <p class="toc-title">Sommaire</p>
+  <ul class="toc">
+    <li><a href="#module-0"><span class="toc-dot" data-module="0"></span>00 — Les outils</a></li>
+    <li><a href="#module-1"><span class="toc-dot" data-module="1"></span>01 — Le Markdown</a></li>
+    <li><a href="#module-2"><span class="toc-dot" data-module="2"></span>02 — HTML</a></li>
+    <li><a href="#module-3"><span class="toc-dot" data-module="3"></span>03 — CSS</a></li>
+    <li><a href="#module-4"><span class="toc-dot" data-module="4"></span>04 — JS de base</a></li>
+    <li><a href="#module-5"><span class="toc-dot" data-module="5"></span>05 — Le DOM</a></li>
+    <li><a href="#module-6"><span class="toc-dot" data-module="6"></span>06 — Fetch & async</a></li>
+    <li><a href="#module-7"><span class="toc-dot" data-module="7"></span>07 — Frontmatter</a></li>
+    <li><a href="#module-8"><span class="toc-dot" data-module="8"></span>08 — MD → HTML</a></li>
+    <li><a href="#module-9"><span class="toc-dot" data-module="9"></span>09 — Architecture</a></li>
+    <li><a href="#module-10"><span class="toc-dot" data-module="10"></span>10 — Page d'accueil</a></li>
+    <li><a href="#module-11"><span class="toc-dot" data-module="11"></span>11 — Page d'article</a></li>
+    <li><a href="#module-12"><span class="toc-dot" data-module="12"></span>12 — Ajouter/modifier/supprimer</a></li>
+    <li><a href="#module-13"><span class="toc-dot" data-module="13"></span>13 — Pour aller plus loin</a></li>
+  </ul>
+
+  <!-- MODULE 0 -->
+  <section class="module" id="module-0">
+    <div class="module-head">
+      <span class="module-num">00</span>
+      <h2>Les outils</h2>
+    </div>
+    <p class="module-sub">Avant de coder</p>
+    <p>Pour tout ce cours, il te faut trois choses : un <strong>éditeur de texte</strong> (VS Code est gratuit et le plus utilisé), un <strong>navigateur</strong> (Chrome, Firefox, Edge — peu importe, tant qu'il a un inspecteur), et un <strong>dossier de projet</strong>. Pas besoin d'installer Node.js, de framework, ni quoi que ce soit d'autre : tout ce cours tourne avec un simple navigateur.</p>
+    <p>Le navigateur a un <strong>inspecteur</strong> (touche F12, ou clic droit → « Inspecter ») qui contient un onglet <strong>Console</strong> (pour voir les messages et erreurs JavaScript) et un onglet <strong>Elements/Éléments</strong> (pour voir le HTML réel de la page). Tu vas t'en servir sans arrêt.</p>
+    <div class="exercise">
+      <span class="card-label">Exercice</span>
+      <p>Installe VS Code si tu ne l'as pas déjà. Crée un dossier vide quelque part sur ton ordinateur, appelé par exemple <code>aganews-exercices</code>, et ouvre-le dans l'éditeur. Ouvre ensuite l'inspecteur de ton navigateur sur n'importe quel site pour repérer où sont les onglets Console et Éléments.</p>
+    </div>
+    <div class="done-row">
+      <input type="checkbox" id="check-0" class="done-check" data-module="0">
+      <label for="check-0">J'ai mon éditeur et mon dossier prêts</label>
+    </div>
+  </section>
+
+  <!-- MODULE 1 -->
+  <section class="module" id="module-1">
+    <div class="module-head">
+      <span class="module-num">01</span>
+      <h2>Le Markdown</h2>
+    </div>
+    <p class="module-sub">Écrire du texte enrichi sans balises</p>
+    <p>Le <strong>Markdown</strong> est une façon d'écrire du texte formaté (titres, gras, listes, liens…) avec de simples symboles au clavier, en restant lisible même non transformé. Il n'est <strong>pas</strong> compris nativement par le navigateur comme le HTML : ce n'est que du texte brut, qu'il faudra convertir plus tard (module 8).</p>
+    <table class="spec">
+      <tr><th>Tu veux</th><th>HTML</th><th>Markdown</th></tr>
+      <tr><td>Titre</td><td><code>&lt;h1&gt;Bonjour&lt;/h1&gt;</code></td><td><code># Bonjour</code></td></tr>
+      <tr><td>Gras</td><td><code>&lt;strong&gt;fort&lt;/strong&gt;</code></td><td><code>**fort**</code></td></tr>
+      <tr><td>Italique</td><td><code>&lt;em&gt;doux&lt;/em&gt;</code></td><td><code>*doux*</code></td></tr>
+      <tr><td>Liste</td><td><code>&lt;ul&gt;&lt;li&gt;Item&lt;/li&gt;&lt;/ul&gt;</code></td><td><code>- Item</code></td></tr>
+      <tr><td>Lien</td><td><code>&lt;a href="..."&gt;clic&lt;/a&gt;</code></td><td><code>[clic](...)</code></td></tr>
+      <tr><td>Citation</td><td><code>&lt;blockquote&gt;...&lt;/blockquote&gt;</code></td><td><code>&gt; texte</code></td></tr>
+    </table>
+    <div class="exercise">
+      <span class="card-label">Exercice</span>
+      <p>Crée un fichier <code>essai.md</code>. Écris un texte contenant : un titre principal, un sous-titre, une phrase avec un mot en <strong>gras</strong> et un en <em>italique</em>, une liste de 3 éléments, et un lien.</p>
+    </div>
+    <details class="hint">
+      <summary>Indice</summary>
+      <div class="hint-body"><p>Un sous-titre utilise deux dièses : <code>## Sous-titre</code>. Pense à laisser une ligne vide entre chaque bloc (titre, paragraphe, liste) — c'est cette ligne vide qui sépare les éléments en markdown.</p></div>
+    </details>
+    <div class="done-row">
+      <input type="checkbox" id="check-1" class="done-check" data-module="1">
+      <label for="check-1">Mon fichier .md est écrit</label>
+    </div>
+  </section>
+
+  <!-- MODULE 2 -->
+  <section class="module" id="module-2">
+    <div class="module-head">
+      <span class="module-num">02</span>
+      <h2>HTML : la structure</h2>
+    </div>
+    <p class="module-sub">Le squelette d'une page</p>
+    <p>HTML décrit la <strong>structure</strong> d'une page avec des balises qui s'ouvrent <code>&lt;tag&gt;</code> et se ferment <code>&lt;/tag&gt;</code>. Toute page commence par le même squelette minimal :</p>
+    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="fr"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Titre de l'onglet&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Titre visible&lt;/h1&gt;
+  &lt;p&gt;Un paragraphe.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    <p>Balises utiles à connaître : <code>h1</code> à <code>h6</code> (titres), <code>p</code> (paragraphe), <code>a href="..."</code> (lien), <code>ul</code>/<code>li</code> (liste), <code>img src="..." alt="..."</code> (image), <code>div</code> (bloc générique), et les balises « sémantiques » <code>header</code>, <code>main</code>, <code>footer</code> qui donnent du sens à une zone de la page.</p>
+    <div class="exercise">
+      <span class="card-label">Exercice</span>
+      <p>Crée <code>test.html</code> avec le squelette minimal. Ajoute dedans : un <code>h1</code>, un paragraphe de présentation, une liste de 3 choses que tu aimes, un lien. Ouvre le fichier en double-cliquant dessus : il doit s'ouvrir dans ton navigateur.</p>
+    </div>
+    <details class="hint">
+      <summary>Indice</summary>
+      <div class="hint-body"><p>Page blanche ? Vérifie que le fichier a bien l'extension <code>.html</code> (pas <code>.html.txt</code>, une erreur fréquente avec certains éditeurs), et que chaque balise ouverte est bien refermée.</p></div>
+    </details>
+    <div class="done-row">
+      <input type="checkbox" id="check-2" class="done-check" data-module="2">
+      <label for="check-2">Ma page test.html s'affiche</label>
+    </div>
+  </section>
+
+  <!-- MODULE 3 -->
+  <section class="module" id="module-3">
+    <div class="module-head">
+      <span class="module-num">03</span>
+      <h2>CSS : la mise en forme</h2>
+    </div>
+    <p class="module-sub">Couleurs, espacements, agencement</p>
+    <p>CSS décrit l'<strong>apparence</strong> : couleurs, tailles, espacements, positionnement. On cible des éléments avec un <strong>sélecteur</strong>, puis on leur donne des propriétés.</p>
+    <pre><code>body {
+  font-family: sans-serif;
+  background: #f0f0f0;
+}
+h1 {
+  color: darkred;
+}
+.ma-classe {
+  margin-bottom: 1rem;
+}</code></pre>
+    <p>Pour lier une feuille CSS à ta page, dans le <code>&lt;head&gt;</code> :</p>
+    <pre><code>&lt;link rel="stylesheet" href="style.css"&gt;</code></pre>
+    <p>Vocabulaire clé : <strong>sélecteur</strong> (balise, <code>.classe</code>, <code>#id</code>), <strong>propriété</strong>/<strong>valeur</strong>, et le <strong>box model</strong> (de l'intérieur vers l'extérieur : contenu → <code>padding</code> → <code>border</code> → <code>margin</code>).</p>
+    <div class="exercise">
+      <span class="card-label">Exercice</span>
+      <p>Crée <code>style.css</code> à côté de <code>test.html</code>, lie-le. Donne une couleur de fond à la page, une couleur différente à ton <code>h1</code>, et du <code>padding</code> à ta liste. Bonus : mets 2-3 éléments dans un <code>div</code> et essaie <code>display: flex;</code> dessus pour les aligner côte à côte.</p>
+    </div>
+    <div class="done-row">
+      <input type="checkbox" id="check-3" class="done-check" data-module="3">
+      <label for="check-3">Ma page a du style</label>
+    </div>
+  </section>
+
+  <!-- MODULE 4 -->
+  <section class="module" id="module-4">
+    <div class="module-head">
+      <span class="module-num">04</span>
+      <h2>JavaScript de base</h2>
+    </div>
+    <p class="module-sub">Variables, fonctions, tableaux, objets</p>
+    <p>JS rend la page interactive. On le lie juste avant <code>&lt;/body&gt;</code> (pour que le HTML soit déjà chargé quand le script s'exécute) :</p>
+    <pre><code>&lt;script src="script.js"&gt;&lt;/script&gt;</code></pre>
+    <p>Les briques de base :</p>
+    <pre><code><span class="tok-kw">const</span> nom = "Aga";
+<span class="tok-kw">let</span> age = 20;
+
+<span class="tok-kw">function</span> direBonjour(n) {
+  <span class="tok-kw">return</span> "Bonjour " + n;
+}
+
+<span class="tok-kw">const</span> fruits = ["pomme", "poire", "kiwi"];
+<span class="tok-kw">for</span> (<span class="tok-kw">const</span> f <span class="tok-kw">of</span> fruits) {
+  console.log(f);
+}
+
+<span class="tok-kw">const</span> article = { titre: "Mon titre", date: "2026-09-16" };
+console.log(article.titre);</code></pre>
+    <p><code>const</code> = variable qui ne change pas, <code>let</code> = variable qui peut changer. Un <strong>tableau</strong> (<code>[]</code>) contient une liste de valeurs. Un <strong>objet</strong> (<code>{}</code>) associe des clés à des valeurs, comme le frontmatter d'un article.</p>
+    <div class="exercise">
+      <span class="card-label">Exercice</span>
+      <p>Crée <code>script.js</code>, lie-le à ton HTML. Écris un tableau de 3 objets représentant des articles fictifs (chacun avec au moins <code>titre</code> et <code>date</code>). Fais une boucle qui affiche chaque titre avec <code>console.log</code>. Recharge la page, ouvre la console (F12) pour vérifier.</p>
+    </div>
+    <div class="done-row">
+      <input type="checkbox" id="check-4" class="done-check" data-module="4">
+      <label for="check-4">Mes 3 titres s'affichent dans la console</label>
+    </div>
+  </section>
+
+  <!-- MODULE 5 -->
+  <section class="module" id="module-5">
+    <div class="module-head">
+      <span class="module-num">05</span>
+      <h2>Le DOM</h2>
+    </div>
+    <p class="module-sub">Modifier la page depuis le script</p>
+    <p>Le <strong>DOM</strong> (Document Object Model) est la représentation en mémoire de ta page, que JS peut lire et modifier. <code>document.querySelector</code> trouve un élément, <code>.textContent</code> change son texte, <code>document.createElement</code> + <code>.appendChild</code> en créent de nouveaux.</p>
+    <pre><code><span class="tok-kw">const</span> titre = document.querySelector("h1");
+titre.textContent = "Nouveau titre";
+
+<span class="tok-kw">const</span> liste = document.querySelector("ul");
+<span class="tok-kw">const</span> item = document.createElement("li");
+item.textContent = "Nouvel élément";
+liste.appendChild(item);</code></pre>
+    <div class="exercise">
+      <span class="card-label">Exercice</span>
+      <p>Reprends ton tableau d'articles fictifs du module 4. Ajoute une <code>&lt;ul id="liste-articles"&gt;&lt;/ul&gt;</code> vide dans ton HTML. Au lieu d'un <code>console.log</code>, crée dynamiquement un <code>&lt;li&gt;</code> par article (avec son titre) et ajoute-le à cette liste.</p>
+    </div>
+    <details class="hint">
+      <summary>Indice</summary>
+      <div class="hint-body"><p>Sélectionne la liste <strong>une seule fois</strong>, avant la boucle. À l'intérieur de la boucle, crée un nouvel élément à <strong>chaque</strong> tour et ajoute-le.</p></div>
+    </details>
+    <div class="done-row">
+      <input type="checkbox" id="check-5" class="done-check" data-module="5">
+      <label for="check-5">Ma liste s'affiche dans la vraie page (pas juste la console)</label>
+    </div>
+  </section>
+
+  <!-- MODULE 6 -->
+  <section class="module" id="module-6">
+    <div class="module-head">
+      <span class="module-num">06</span>
+      <h2>Fetch &amp; async</h2>
+    </div>
+    <p class="module-sub">Aller chercher un fichier externe</p>
+    <p>Jusqu'ici, tes données étaient écrites en dur dans le script. <code>fetch()</code> va chercher un fichier externe, mais ça prend du temps : c'est <strong>asynchrone</strong>. Les mots-clés <code>async</code>/<code>await</code> permettent d'écrire ce code presque comme du code normal.</p>
+    <pre><code><span class="tok-kw">async function</span> chargerFichier() {
+  <span class="tok-kw">const</span> reponse = <span class="tok-kw">await</span> fetch("mon-fichier.txt");
+  <span class="tok-kw">const</span> texte = <span class="tok-kw">await</span> reponse.text();
+  console.log(texte);
+}
+chargerFichier();</code></pre>
+    <div class="warn"><strong>Piège classique :</strong> <code>fetch()</code> sur un fichier local ne marche pas si tu ouvres ton HTML en double-cliquant (protocole <code>file://</code>). Il faut un petit serveur local.</div>
+    <p>Deux façons simples de lancer un serveur local dans ton dossier de projet :</p>
+    <ul>
+      <li>Avec Python : <code>python3 -m http.server 8000</code>, puis ouvrir <code>http://localhost:8000</code></li>
+      <li>Avec VS Code : installer l'extension « Live Server », clic droit sur le HTML → « Open with Live Server »</li>
+    </ul>
+    <div class="exercise">
+      <span class="card-label">Exercice</span>
+      <p>Crée <code>salut.txt</code> contenant une phrase. Écris une fonction <code>async</code> qui le charge avec <code>fetch</code> et affiche son contenu dans une balise de ta page (pas juste <code>console.log</code>, en réutilisant le module 5). Lance un serveur local pour tester.</p>
+    </div>
+    <div class="done-row">
+      <input type="checkbox" id="check-6" class="done-check" data-module="6">
+      <label for="check-6">Le contenu de mon fichier s'affiche via fetch</label>
+    </div>
+  </section>
+
+  <!-- MODULE 7 -->
+  <section class="module" id="module-7">
+    <div class="module-head">
+      <span class="module-num">07</span>
+      <h2>Le Frontmatter</h2>
+    </div>
+    <p class="module-sub">Les métadonnées en haut d'un article</p>
+    <p>Pour qu'un article ait un titre, une date, un auteur sans les deviner depuis le texte, on ajoute un bloc de métadonnées en haut du fichier, entre deux lignes <code>---</code>. C'est une convention très répandue (Jekyll, Hugo, Next.js…).</p>
+    <pre><code>---
+title: Mon titre
+date: 2026-09-20
+---
+
+Le contenu de l'article...</code></pre>
+    <p>Il faut donc écrire une fonction qui : 1) sépare le texte en deux (le bloc de métadonnées et le reste), 2) transforme chaque ligne <code>clé: valeur</code> en objet JS.</p>
+    <p>Outils utiles (pas la solution, juste le nécessaire) : <code>.split("\n")</code> découpe un texte en lignes. <code>.indexOf(":")</code> trouve la position du premier <code>:</code>. <code>.slice(debut, fin)</code> découpe une chaîne. <code>.trim()</code> retire les espaces autour.</p>
+    <div class="exercise">
+      <span class="card-label">Exercice</span>
+      <p>Écris une fonction <code>parseFrontmatter(texte)</code> qui prend une chaîne comme ci-dessus et retourne <code>{ data: {title: "Mon titre", date: "2026-09-20"}, content: "Le contenu de l'article..." }</code>. Teste-la avec 2-3 exemples écrits en dur dans ton script (pas besoin de fetch pour cet exercice, entraîne-toi sur la logique seule).</p>
+    </div>
+    <details class="hint">
+      <summary>Indice</summary>
+      <div class="hint-body"><p>Repère la position de la <strong>première</strong> ligne <code>---</code> et de la <strong>deuxième</strong>. Tout ce qui est entre les deux, c'est le frontmatter (à découper ligne par ligne). Tout ce qui vient après la deuxième, c'est le contenu.</p></div>
+    </details>
+    <div class="done-row">
+      <input type="checkbox" id="check-7" class="done-check" data-module="7">
+      <label for="check-7">Ma fonction parseFrontmatter fonctionne sur mes exemples</label>
+    </div>
+  </section>
+
+  <!-- MODULE 8 -->
+  <section class="module" id="module-8">
+    <div class="module-head">
+      <span class="module-num">08</span>
+      <h2>Markdown → HTML</h2>
+    </div>
+    <p class="module-sub">Convertir le texte en vraies balises</p>
+    <p>Le markdown n'est que du texte : pour que le navigateur affiche un vrai <code>&lt;h1&gt;</code> ou un vrai <code>&lt;strong&gt;</code>, il faut le transformer en HTML. Deux étapes pédagogiques, dans l'ordre :</p>
+    <p><strong>1. Comprendre le principe :</strong> écris une fonction qui gère seulement 2-3 règles simples avec des expressions régulières (« regex ») et <code>.replace()</code>.</p>
+    <pre><code>texte.replace(<span class="tok-kw">/\*\*(.+?)\*\*/g</span>, "&lt;strong&gt;$1&lt;/strong&gt;")</code></pre>
+    <p>Cette ligne remplace chaque <code>**mot**</code> par <code>&lt;strong&gt;mot&lt;/strong&gt;</code>.</p>
+    <p><strong>2. Utiliser une vraie librairie :</strong> pour un rendu complet et fiable (listes, code, citations, liens imbriqués...), on utilise une librairie déjà écrite plutôt que de tout réinventer. <code>marked</code> est l'une des plus utilisées. Télécharge son fichier <code>marked.umd.js</code> (disponible sur github.com/markedjs/marked, dossier <code>lib/</code>), place-le dans un dossier <code>vendor/</code> de ton projet, puis :</p>
+    <pre><code>&lt;script src="vendor/marked.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  <span class="tok-kw">const</span> html = marked.parse("# Titre\n\nUn paragraphe en **gras**.");
+  document.querySelector("#zone").innerHTML = html;
+&lt;/script&gt;</code></pre>
+    <div class="exercise">
+      <span class="card-label">Exercice</span>
+      <ol>
+        <li>Écris <code>markdownVersHtml(texte)</code> qui remplace <code># titre</code> par <code>&lt;h1&gt;titre&lt;/h1&gt;</code> et <code>**mot**</code> par <code>&lt;strong&gt;mot&lt;/strong&gt;</code> avec des regex.</li>
+        <li>Ensuite, récupère <code>marked</code>, et utilise <code>marked.parse()</code> sur le <code>content</code> extrait par ta fonction <code>parseFrontmatter</code> du module 7.</li>
+      </ol>
+    </div>
+    <div class="done-row">
+      <input type="checkbox" id="check-8" class="done-check" data-module="8">
+      <label for="check-8">Mon markdown s'affiche en vrai HTML mis en forme</label>
+    </div>
+  </section>
+
+  <!-- MODULE 9 -->
+  <section class="module" id="module-9">
+    <div class="module-head">
+      <span class="module-num">09</span>
+      <h2>Architecture du site</h2>
+    </div>
+    <p class="module-sub">Organiser les fichiers du projet</p>
+    <p>Tu as maintenant tous les outils : HTML/CSS/JS, DOM, fetch, frontmatter, markdown→HTML. Il faut organiser le projet. Rappel de l'idée : chaque article = un fichier <code>.md</code> dans un dossier <code>articles/</code>. Comme JS ne peut <strong>pas</strong> lister automatiquement le contenu d'un dossier depuis le navigateur (restriction de sécurité), il faut une liste manuelle : un fichier <code>manifest.json</code> qui contient les noms des fichiers à afficher.</p>
+    <div class="tree">mon-site/
+  index.html         page d'accueil
+  article.html        page d'un article
+  css/style.css
+  js/ (tes scripts)
+  vendor/marked.min.js
+  articles/
+    manifest.json     liste des fichiers .md
+    premier-article.md
+    deuxieme-article.md</div>
+    <div class="exercise">
+      <span class="card-label">Exercice</span>
+      <p>Crée cette arborescence de dossiers/fichiers (vides pour l'instant, tu les rempliras dans les modules suivants). Écris 2 vrais articles <code>.md</code> avec le frontmatter du module 7. Écris <code>manifest.json</code> : un tableau JSON avec les 2 noms de fichiers, par exemple <code>["premier-article.md", "deuxieme-article.md"]</code>.</p>
+    </div>
+    <div class="done-row">
+      <input type="checkbox" id="check-9" class="done-check" data-module="9">
+      <label for="check-9">Mon arborescence et mes 2 articles existent</label>
+    </div>
+  </section>
+
+  <!-- MODULE 10 -->
+  <section class="module" id="module-10">
+    <div class="module-head">
+      <span class="module-num">10</span>
+      <h2>La page d'accueil</h2>
+    </div>
+    <p class="module-sub">Assembler fetch + DOM + tri</p>
+    <p>C'est ici que tout se connecte. Les étapes logiques, à coder toi-même dans cet ordre :</p>
+    <ol>
+      <li><code>fetch("articles/manifest.json")</code> puis <code>.json()</code> pour obtenir la liste des noms de fichiers.</li>
+      <li>Pour chaque nom, <code>fetch("articles/" + nom)</code> puis <code>.text()</code> pour le contenu brut.</li>
+      <li><code>parseFrontmatter()</code> (module 7) pour extraire titre / date / extrait.</li>
+      <li>Trier le tableau résultant par date, du plus récent au plus ancien.</li>
+      <li>Pour chaque article, créer un élément DOM (module 5) affichant titre + date + extrait, avec un lien vers <code>article.html?slug=...</code>.</li>
+    </ol>
+    <p>Pour attendre <strong>plusieurs</strong> <code>fetch</code> en parallèle avant de continuer, combine <code>.map()</code> et <code>Promise.all()</code> :</p>
+    <pre><code><span class="tok-kw">const</span> resultats = <span class="tok-kw">await</span> Promise.all(
+  tableau.map(<span class="tok-kw">async</span> (item) => {
+    <span class="tok-kw">const</span> r = <span class="tok-kw">await</span> fetch(item);
+    <span class="tok-kw">return await</span> r.text();
+  })
+);</code></pre>
+    <p>Pour trier par date décroissante, une comparaison classique :</p>
+    <pre><code>tableau.sort((a, b) => <span class="tok-kw">new</span> Date(b.date) - <span class="tok-kw">new</span> Date(a.date));</code></pre>
+    <div class="exercise">
+      <span class="card-label">Exercice</span>
+      <p>Implémente <code>index.html</code> + le script qui charge le manifest, charge chaque article, extrait ses métadonnées, trie par date, et affiche une liste de cartes cliquables. Mets un <code>?slug=nom-du-fichier-sans-extension</code> dans chaque lien.</p>
+    </div>
+    <details class="hint">
+      <summary>Indice</summary>
+      <div class="hint-body"><p>Teste étape par étape : d'abord affiche juste les <strong>noms</strong> de fichiers (étape 1 seule), vérifie que ça marche, puis ajoute le contenu (étapes 2-3), puis le tri, puis le style. N'écris jamais tout d'un coup sans tester entre chaque étape — c'est la meilleure façon de localiser un bug.</p></div>
+    </details>
+    <div class="done-row">
+      <input type="checkbox" id="check-10" class="done-check" data-module="10">
+      <label for="check-10">Ma page d'accueil liste mes articles, triés par date</label>
+    </div>
+  </section>
+
+  <!-- MODULE 11 -->
+  <section class="module" id="module-11">
+    <div class="module-head">
+      <span class="module-num">11</span>
+      <h2>La page d'article</h2>
+    </div>
+    <p class="module-sub">Lire l'URL, afficher un article complet</p>
+    <p>Dans <code>article.html?slug=mon-article</code>, la partie après le <code>?</code> est une « query string ». <code>URLSearchParams</code> permet de la lire :</p>
+    <pre><code><span class="tok-kw">const</span> params = <span class="tok-kw">new</span> URLSearchParams(window.location.search);
+<span class="tok-kw">const</span> slug = params.get("slug");</code></pre>
+    <div class="exercise">
+      <span class="card-label">Exercice</span>
+      <p>Dans <code>article.html</code>, récupère le <code>slug</code>, fais <code>fetch("articles/" + slug + ".md")</code>, parse le frontmatter, affiche titre/date/auteur, et affiche le <strong>contenu</strong> converti en HTML avec <code>marked.parse()</code> (module 8) dans une zone dédiée.</p>
+    </div>
+    <details class="hint">
+      <summary>Indice</summary>
+      <div class="hint-body"><p>Gère les cas d'erreur proprement : si <code>slug</code> est absent, affiche un message clair plutôt qu'une page blanche. Après le <code>fetch</code>, vérifie <code>response.ok</code> avant de continuer — un fichier introuvable ne lève pas d'erreur automatiquement avec <code>fetch</code>.</p></div>
+    </details>
+    <div class="done-row">
+      <input type="checkbox" id="check-11" class="done-check" data-module="11">
+      <label for="check-11">Cliquer sur un article depuis l'accueil affiche bien son contenu</label>
+    </div>
+  </section>
+
+  <!-- MODULE 12 -->
+  <section class="module" id="module-12">
+    <div class="module-head">
+      <span class="module-num">12</span>
+      <h2>Ajouter, modifier, supprimer</h2>
+    </div>
+    <p class="module-sub">Le workflow au quotidien</p>
+    <p>Pas de base de données ni d'interface d'admin : gérer le contenu, c'est manipuler des fichiers.</p>
+    <table class="spec">
+      <tr><th>Action</th><th>Ce que tu fais</th></tr>
+      <tr><td>Ajouter</td><td>Nouveau fichier <code>.md</code> (frontmatter + contenu) + ajouter son nom dans <code>manifest.json</code></td></tr>
+      <tr><td>Modifier</td><td>Éditer directement le fichier <code>.md</code> concerné</td></tr>
+      <tr><td>Supprimer</td><td>Supprimer le fichier + retirer son nom de <code>manifest.json</code></td></tr>
+    </table>
+    <div class="exercise">
+      <span class="card-label">Exercice</span>
+      <p>Fais le test complet : ajoute un 3ᵉ article, vérifie qu'il apparaît sur la page d'accueil à la bonne position selon sa date, clique dessus, vérifie l'affichage. Puis supprime-le et vérifie qu'il disparaît bien de la liste.</p>
+    </div>
+    <div class="callout"><strong>Pour publier en ligne (optionnel) :</strong> <code>git add</code>, <code>git commit</code>, <code>git push</code>, puis héberger gratuitement avec GitHub Pages (Settings → Pages → choisir la branche du dépôt).</div>
+    <div class="done-row">
+      <input type="checkbox" id="check-12" class="done-check" data-module="12">
+      <label for="check-12">J'ai ajouté puis supprimé un article avec succès</label>
+    </div>
+  </section>
+
+  <!-- MODULE 13 -->
+  <section class="module" id="module-13">
+    <div class="module-head">
+      <span class="module-num">13</span>
+      <h2>Pour aller plus loin</h2>
+    </div>
+    <p class="module-sub">Idées d'extensions, sans solution</p>
+    <p>Une fois les 13 chantiers précédents terminés, ton site fonctionne entièrement. Voici des pistes pour continuer à pratiquer seul, du plus simple au plus ambitieux :</p>
+    <ul>
+      <li>Un champ <code>image</code> dans le frontmatter, affiché en haut de chaque carte d'article.</li>
+      <li>Des catégories ou tags, avec un filtre sur la page d'accueil.</li>
+      <li>Une barre de recherche qui filtre les articles par titre en direct.</li>
+      <li>Un mode sombre : un bouton qui bascule un thème, mémorisé avec <code>localStorage</code>.</li>
+      <li>De la pagination si tu accumules beaucoup d'articles.</li>
+      <li>Remplacer le <code>manifest.json</code> géré à la main par un petit script qui scanne automatiquement le dossier <code>articles/</code> — attention, ça demande un mini serveur/build, ce n'est plus « juste un navigateur ».</li>
+    </ul>
+    <div class="exercise">
+      <span class="card-label">Défi</span>
+      <p>Choisis une seule idée ci-dessus et implémente-la de bout en bout, sans indice cette fois.</p>
+    </div>
+    <div class="done-row">
+      <input type="checkbox" id="check-13" class="done-check" data-module="13">
+      <label for="check-13">J'ai testé au moins une extension</label>
+    </div>
+  </section>
+
+  <footer class="outro">
+    <h2>Chantier terminé</h2>
+    <p>Tu as maintenant construit un site complet, pièce par pièce, en comprenant chaque brique. Reviens dans le chat quand tu veux : pour une relecture de ce que tu as écrit, un bug précis à déboguer ensemble, ou approfondir un concept.</p>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  var STORAGE_KEY = "atelier-aganews-progress";
+
+  function loadProgress() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    } catch (e) {
+      return {};
+    }
+  }
+  function saveProgress(p) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
+    } catch (e) {}
+  }
+
+  var progress = loadProgress();
+  var checkboxes = Array.prototype.slice.call(document.querySelectorAll(".done-check"));
+  var total = checkboxes.length;
+
+  function updateUI() {
+    var doneCount = 0;
+    checkboxes.forEach(function (cb) {
+      var id = cb.dataset.module;
+      var isDone = !!progress[id];
+      cb.checked = isDone;
+      if (isDone) doneCount++;
+      var section = document.getElementById("module-" + id);
+      if (section) section.classList.toggle("is-done", isDone);
+      var dot = document.querySelector('.toc-dot[data-module="' + id + '"]');
+      if (dot) dot.classList.toggle("is-done", isDone);
+    });
+    var fill = document.getElementById("progress-fill");
+    var label = document.getElementById("progress-label");
+    var pct = total ? Math.round((doneCount / total) * 100) : 0;
+    if (fill) fill.style.width = pct + "%";
+    if (label) label.textContent = doneCount + " / " + total + " étapes terminées";
+  }
+
+  checkboxes.forEach(function (cb) {
+    cb.addEventListener("change", function () {
+      progress[cb.dataset.module] = cb.checked;
+      saveProgress(progress);
+      updateUI();
+    });
+  });
+
+  var resetBtn = document.getElementById("reset-progress");
+  if (resetBtn) {
+    resetBtn.addEventListener("click", function () {
+      progress = {};
+      saveProgress(progress);
+      updateUI();
+    });
+  }
+
+  updateUI();
+})();
+</script>
