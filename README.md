@@ -2,7 +2,7 @@
 Mon espace d'articles pour les mini-projets, astuces et découvertes qui méritent une page, pas un repo entier.
 
 
-## 💡 Pourquoi AgaNews ?
+## Pourquoi AgaNews ?
 
 Créer un dépôt GitHub, c'est parfait pour un vrai projet avec du code, un historique et des versions.
 Mais pour beaucoup de choses, c'est trop :
@@ -18,9 +18,9 @@ AgaNews règle ce problème : au lieu d'un repo, je publie un article.
 Une page claire, avec du texte, des images, des captures et des extraits de code si besoin.
 
 
-## 🤔 Article ou repo ?
+## Article ou repo ?
 
-| 📰 Article AgaNews | 📦 Repo GitHub |
+| Article AgaNews | Repo GitHub |
 |---|---|
 | Projet court | Projet qui évolue dans le temps |
 | Surtout de l'explication et des images | Beaucoup de code à versionner |
@@ -29,7 +29,7 @@ Une page claire, avec du texte, des images, des captures et des extraits de code
 
 En résumé : si ça se lit, c'est un article. Si ça se maintient, c'est un repo.
 
-## 🎯 Objectifs
+## Objectifs
 
 - Garder une trace de tout ce que je fais, même les petites choses
 - Avoir un endroit où retrouver mes astuces rapidement
