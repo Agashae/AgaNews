@@ -1,15 +1,26 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>AgaNews</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>AgaNews</title>
 </head>
+
 <body>
   <h1>AgaNews</h1>
   <p>Bientôt mes premiers articles ici.</p>
 
-  <a href="/articles/AgaNewsEnLigne/index.md">Comment j'ai mis AgaNews en ligne</a>
+
+
+  <!--
+  - Pas de "/" au début : le lien reste relatif au dossier /AgaNews/
+    (un "/" repartirait de la racine agashae.github.io → 404).
+  - Pas de "index.md" : GitHub le convertit en index.html, et un
+    dossier ouvre automatiquement son index.html.
+-->
+  <a href="articles/AgaNewsEnLigne/">Comment j'ai mis AgaNews en lignea>
 </body>
+
 </html>
