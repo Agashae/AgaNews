@@ -52,3 +52,25 @@ transform: scale(1.01);
   padding: 0.15rem 0.6rem;
   border-radius: 999px;
 }
+
+
+#recherche {
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  margin-bottom: 1.5rem;
+  font-family: inherit;
+  font-size: 1rem;
+  color: #f0f0ff;
+  background: #2a2a3d;
+  border: 3px solid #3a3a5a;
+  border-radius: 10px;
+  transition: border-color 0.2s;
+}
+
+
+
+/* focus quand on clique dedans */
+#recherche:focus {
+  outline: none;/* enlève le contour bleu du navigateur */
+  border-color: #a8a8ff;/* la bordure s'allume en violet */
+}
