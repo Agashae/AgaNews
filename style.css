@@ -26,7 +26,7 @@ transform: scale(1.01);
 
 .preview {
   width: 100%;
-  height: 200px;/* hauteur fixe pour que toutes les cartes soient pareilles */
+  height: auto;
   object-fit: cover; /* recadre l'image sans la déformer */
   border-radius: 6px;
   margin-top: 0.8rem;
