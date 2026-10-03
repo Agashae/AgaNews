@@ -33,3 +33,19 @@ transform: scale(1.01);
   font-size: 0.85rem;
   color: #8a8aa0;
 }
+
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.6rem 0;
+}
+
+.tag {
+  font-size: 0.8rem;
+  color: #a8a8ff;
+  background: #3a3a5a;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+}
