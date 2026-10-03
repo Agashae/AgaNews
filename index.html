@@ -8,11 +8,17 @@
   <title>AgaNews</title>
 </head>
 
+
+
 <body>
-  <h1>AgaNews</h1>
+
+  <div class="Title">
+      <h1>AgaNews</h1>
   <p>Bientôt mes premiers articles ici.</p>
+  </div>
 
-
+<!--Aide de Claude pour cette partie-->
+<input type="search" id="recherche" placeholder="Rechercher...">
 
   <!--
   - Pas de "/" au début : le lien reste relatif au dossier /AgaNews/
@@ -20,7 +26,7 @@
   - Pas de "index.md" : GitHub le convertit en index.html, et un
     dossier ouvre automatiquement son index.html.
 -->
-<a class="carte" href="articles/AgaNewsEnLigne/">
+  <a class="carte" href="articles/AgaNewsEnLigne/" data-tags="web github">
   <!-- <span> conteneur en ligne qui permet d'isoler une partie pour lui appliquer du style ou un comportement dynamique-->
   <span class="date">03.10.2026</span>
   <h2>Comment j'ai mis AgaNews en ligne</h2>
@@ -38,7 +44,24 @@
 
 
 
+<!--Aide de CLaude pour le JS-->
+<!--
+Trouve la case de recherche
+Quand on tape dedans, prends le mot tapé (en minuscules), pour chaque carte, lis son texte et ses tags
+Si le mot est dedans, affiche-la, sinon cache-la
+-->
+<script>
+  const champ = document.getElementById("recherche");
 
+  champ.addEventListener("input", function () {
+    const mot = champ.value.toLowerCase();
+
+    document.querySelectorAll(".carte").forEach(function (carte) {
+      const texte = carte.textContent.toLowerCase() + carte.dataset.tags;
+      carte.style.display = texte.includes(mot) ? "block" : "none";
+    });
+  });
+</script>
 
 
 </body>

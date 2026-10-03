@@ -3,6 +3,10 @@ body {
   max-width: 750px;
   margin: 0 auto;
   padding: 1.5rem;
+  background-color: #0d0d14;
+}
+.Title {
+  color: #a8a8ff;
 }
 
 .carte {
