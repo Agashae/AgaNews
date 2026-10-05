@@ -43,3 +43,10 @@ code, pre, .highlight {
 
 //cacher le pied de page du thème ("This site is open source. Improve this page")
 .footer { display: none; }
+
+
+//ma police Courier New est fine et on voit mal le gras alors on aide le gras avec une couleur plus vive que le texte normal (#c8c8e0).
+strong {
+  font-weight: 700;     // gras maximum de la police
+  color: #ffffff;       // blanc pur : ressort sur le texte gris clair
+}
