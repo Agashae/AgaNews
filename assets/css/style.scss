@@ -2,19 +2,24 @@
 ---
 // les 2 lignes en haut doivent pas bouger, elles disent à Jekyll de traiter ceci avant de publier
 
+// Nouvelle police, chargée depuis Google Fonts.
+// Elle doit être AVANT le thème : un @import de police ne marche que tout en haut.
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
 //.scss = CSS avec quelques options en +
 @import "{{ site.theme }}";
 
 body {
-  background: #12121c;                            
-  color: #f0f0ff;                                 
-  font-family: 'Courier New', Courier, monospace; 
+  background: #0a0a12;
+  color: #f5f5ff;                                
+  font-family: 'JetBrains Mono', monospace;        
+  line-height: 1.7;                              
 }
 
-h1, h2, h3, a { color: #a8a8ff; }
-
+h1, h2, h3, a { color: #b4b4ff; }                  
 
 code, pre, .highlight {
-  background: #2a2a3d !important;
-  color: #f0f0ff;                
+  background: #16161f !important;                
+  color: #f5f5ff;
+  font-family: 'JetBrains Mono', monospace;
 }
