@@ -1,19 +1,13 @@
 # Comment j'ai mis AgaNews en ligne
 
-Ce soir j'ai publié mon site **gratuitement** avec GitHub Pages
+J'ai publié mon site **gratuitement** avec GitHub Pages
 
 ## Les étapes
 
 - Créer le repo sur GitHub
-- Faire un commit et un push depuis VS Code
+- Faire un commit et un push depuis VS Code d'un index.html au minimum (c'est + simple que donner un autre url)
 - Activer Pages dans Settings → Pages
+- Attendre quelques secondes et il sera là
+- Si ça marche pas, je fais Branch -> Main en Root -> Root en Main
 
 ![Les réglages de GitHub Pages](github-pages.png)
-
-## La commande qui m'a aidé
-
-```
-git status
-```
-
-Elle dit si le dossier est bien un dépôt Git.
