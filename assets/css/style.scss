@@ -40,3 +40,6 @@ code, pre, .highlight {
 .markdown-body pre {
   font-family: 'Courier New', Courier, monospace !important;
 }
+
+//cacher le pied de page du thème ("This site is open source. Improve this page")
+.footer { display: none; }
