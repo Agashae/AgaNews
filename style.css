@@ -74,3 +74,14 @@ transform: scale(1.01);
   outline: none;/* enlève le contour bleu du navigateur */
   border-color: #a8a8ff;/* la bordure s'allume en violet */
 }
+
+
+.entete {
+  display: flex;
+  align-items: center; 
+  gap: 1rem;  
+}           
+
+.logo {
+  height: 60px;     
+}
