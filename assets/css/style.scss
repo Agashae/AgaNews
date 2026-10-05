@@ -1,0 +1,20 @@
+---
+---
+// les 2 lignes en haut doivent pas bouger, elles disent à Jekyll de traiter ceci avant de publier
+
+//.scss = CSS avec quelques options en +
+@import "{{ site.theme }}";
+
+body {
+  background: #12121c;                            
+  color: #f0f0ff;                                 
+  font-family: 'Courier New', Courier, monospace; 
+}
+
+h1, h2, h3, a { color: #a8a8ff; }
+
+
+code, pre, .highlight {
+  background: #2a2a3d !important;
+  color: #f0f0ff;                
+}

@@ -1,0 +1,3 @@
+#fichier pour les réglages de Jekyll, c'est l'outil de GitHub Pages qui transforme les .md en pages web.
+#Primer est le thème par défaut de GitHub Pages et style.scss va le charger, puis changer ses couleurs.
+theme: jekyll-theme-primer
