@@ -2,24 +2,36 @@
 ---
 // les 2 lignes en haut doivent pas bouger, elles disent à Jekyll de traiter ceci avant de publier
 
-// Nouvelle police, chargée depuis Google Fonts.
-// Elle doit être AVANT le thème : un @import de police ne marche que tout en haut.
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
-
 //.scss = CSS avec quelques options en +
 @import "{{ site.theme }}";
 
+// Même base que la page d'accueil (style.css)
 body {
-  background: #0a0a12;
-  color: #f5f5ff;                                
-  font-family: 'JetBrains Mono', monospace;        
-  line-height: 1.7;                              
+  font-family: 'Courier New', Courier, monospace;
+  max-width: 750px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background-color: #0d0d14;
+  color: #c8c8e0;                  // texte gris clair, pas blanc
 }
 
-h1, h2, h3, a { color: #b4b4ff; }                  
+// "AgaNews" tout en haut : c'est un lien dans un titre, d'où "h1 a"
+h1 a {
+  color: #a8a8ff !important;       // violet, comme .Title sur l'accueil
+  text-decoration: none;
+}
 
+// Titres de l'article : plus clairs que le texte, mais pas violets
+h1, h2, h3 { color: #f0f0ff; }
+
+// Trait sous les ##, assorti au reste
+h2 { border-bottom: 2px solid #3a3a5a !important; }
+
+// Liens dans l'article, même violet que les tags
+a { color: #a8a8ff; }
+
+// Code : même fond que tes cartes
 code, pre, .highlight {
-  background: #16161f !important;                
-  color: #f5f5ff;
-  font-family: 'JetBrains Mono', monospace;
+  background: #2a2a3d !important;
+  color: #f0f0ff;
 }
