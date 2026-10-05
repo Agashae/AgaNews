@@ -7,31 +7,36 @@
 
 // Même base que la page d'accueil (style.css)
 body {
-  font-family: 'Courier New', Courier, monospace;
   max-width: 750px;
   margin: 0 auto;
   padding: 1.5rem;
   background-color: #0d0d14;
-  color: #c8c8e0;                  // texte gris clair, pas blanc
+  color: #c8c8e0;        
 }
 
-// "AgaNews" tout en haut : c'est un lien dans un titre, d'où "h1 a"
+// AgaNews tout en haut :est un lien dans un titre, d'où h1 a
 h1 a {
-  color: #a8a8ff !important;       // violet, comme .Title sur l'accueil
+  color: #a8a8ff !important;  
   text-decoration: none;
 }
 
-// Titres de l'article : plus clairs que le texte, mais pas violets
 h1, h2, h3 { color: #f0f0ff; }
 
-// Trait sous les ##, assorti au reste
 h2 { border-bottom: 2px solid #3a3a5a !important; }
 
-// Liens dans l'article, même violet que les tags
 a { color: #a8a8ff; }
 
-// Code : même fond que tes cartes
 code, pre, .highlight {
   background: #2a2a3d !important;
   color: #f0f0ff;
+}
+
+// Le thème met sa propre police sur le bloc de l'article alors mettre .markdown-body pour écraser celle du body
+.markdown-body,
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body code,
+.markdown-body pre {
+  font-family: 'Courier New', Courier, monospace !important;
 }
