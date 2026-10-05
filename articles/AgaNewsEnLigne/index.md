@@ -1,6 +1,6 @@
 # Comment j'ai mis AgaNews en ligne
 
-J'ai publié mon site gratuitement avec GitHub Pages
+J'ai publié mon site **gratuitement** avec GitHub Pages
 
 ## Les étapes
 
