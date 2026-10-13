@@ -1,0 +1,8 @@
+pages astronomiques avec guide et photos genre : 
+articles/
+└── astronomie/
+    ├── comprendre/
+    │   ├── phases-de-la-lune/
+    │   └── reperer-les-constellations/
+    └── observations/
+        └── 2026-10-12-lune-et-jupiter/
