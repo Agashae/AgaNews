@@ -18,6 +18,7 @@ body {
   color: white;
   text-decoration: none;  
   transition: transform 0.2s;
+  margin: 2%;
 }
 
 .carte:hover {
