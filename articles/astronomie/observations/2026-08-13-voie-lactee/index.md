@@ -14,6 +14,7 @@ Une nuit sans Lune, mais avec la Voie lactée depuis mon balcon !!!!!
 | Focale | 26 mm (équiv. 24×36) |
 
 ![La Voie lactée, sans le toit](voie-lactee-sans-toit.jpg)
+
 | Réglage | Valeur |
 |---|---|
 | Appareil | iPhone 16, mode nuit |

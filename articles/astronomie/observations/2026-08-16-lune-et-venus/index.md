@@ -3,6 +3,7 @@
 Un fin croissant de Lune et Vénus juste à côté, au coucher du soleil.
 
 ![La Lune et Vénus](lune-et-venus.jpg)
+
 | Réglage | Valeur |
 |---|---|
 | Appareil | iPhone 16 |

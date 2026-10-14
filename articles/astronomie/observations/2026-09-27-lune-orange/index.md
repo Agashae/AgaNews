@@ -3,6 +3,7 @@
 La Lune toute orange et encore basse sur l'horizon.
 
 ![La Lune orange](lune-orange.jpg)
+
 | Réglage | Valeur |
 |---|---|
 | Appareil | iPhone 16 |
