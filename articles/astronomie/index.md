@@ -23,4 +23,9 @@ Le tout est composé de 2 partie
 ## Mon matériel
 
 - iPhone 16, mode nuit
-- Sirius, une appli pour identifier les étoiles et les planètes
+- Sirius Stars, une appli pour identifier les étoiles et les planètes
+<br>
+[App Store](https://apps.apple.com/fr/app/sirius-stars/id6756136691)	
+<br>
+[Google Play](https://play.google.com/store/apps/details?id=com.matthis.rey.Sirius&pcampaignid=web_share)	
+
