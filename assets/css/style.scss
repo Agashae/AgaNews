@@ -50,3 +50,29 @@ strong {
   font-weight: 700;     // gras maximum de la police
   color: #ffffff;       // blanc pur : ressort sur le texte gris clair
 }
+
+
+
+// les tableaux sont pas défaut en fond blanc
+.markdown-body table tr {
+  background-color: #1a1a28 !important;
+  border-top: 1px solid #3a3a5a !important;
+}
+
+// 1/2 ligne légèrement différente, pour suivre plus facilement
+.markdown-body table tr:nth-child(2n) {
+  background-color: #222233 !important;
+}
+
+// bordures cases, assortir aux cartes
+.markdown-body table th,
+.markdown-body table td {
+  border: 1px solid #3a3a5a !important;
+  color: #c8c8e0;
+}
+
+//ligne de titre du tableau (réglage / valeur sur 01.08.2026 · Pleine Lune dans les nuages)
+.markdown-body table th {
+  background-color: #2a2a3d !important;
+  color: #a8a8ff;
+}
