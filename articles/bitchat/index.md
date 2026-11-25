@@ -1,18 +1,17 @@
 # BitChat : discuter sans Internet grâce au Bluetooth
 
-*Test réalisé le 7 novembre 2026 avec deux iPhones.*
-
-> **En bref**
->
-> BitChat est une messagerie qui fonctionne sans compte, sans numéro de téléphone et sans serveur : les téléphones proches s'écrivent directement par Bluetooth.
->
-> Je l'ai testée avec un iPhone 16 et un iPhone XR, en mode avion et avec seulement le Bluetooth activé. Ça marche : détection en environ une minute, message public, puis message privé chiffré.
-
 ## C'est quoi BitChat ?
 
-BitChat est une application de messagerie décentralisée. Contrairement à WhatsApp ou Messenger, elle ne demande ni compte, ni numéro de téléphone, ni adresse e-mail, et elle ne passe par aucun serveur central. Deux téléphones qui ont l'application et qui sont à portée l'un de l'autre se parlent directement en Bluetooth, même sans réseau mobile ni Wi-Fi.
+BitChat est une application de messagerie décentralisée. <br> <br>
+Contrairement à WhatsApp ou Messenger, elle ne demande ni compte, ni numéro de téléphone, ni adresse e-mail, et elle ne passe par aucun serveur central.
+<br> <br>
+ Deux téléphones qui ont l'application et qui sont à portée l'un de l'autre se parlent directement en Bluetooth, même sans réseau mobile ni Wi-Fi.
 
-Chaque téléphone peut aussi servir de relais : un message peut sauter d'un appareil à l'autre pour aller plus loin que la portée d'un seul Bluetooth. On appelle ça un réseau maillé (« mesh »). Selon le dépôt du projet, un message peut traverser jusqu'à 7 relais.
+Chaque téléphone peut aussi servir de relais : un message peut sauter d'un appareil à l'autre pour aller plus loin que la portée d'un seul Bluetooth. On appelle ça un réseau maillé (« mesh »). <br> Selon le dépôt du projet, un message peut traverser jusqu'à 7 relais.
+
+<img src="SchemaMesh.webp" alt="iPhone XR : fenêtre « bluetooth requis » et bandeau rouge" width="260">
+
+
 
 C'est utile quand le réseau est coupé ou saturé (panne, festival, zone sans couverture) ou quand on veut communiquer sans laisser de trace sur un service centralisé.
 
@@ -124,3 +123,4 @@ Une réserve : le dépôt du projet indique que l'identifiant utilisé par le Bl
 
 - Dépôt officiel de BitChat : [github.com/permissionlesstech/bitchat](https://github.com/permissionlesstech/bitchat)
 - Captures d'écran réalisées lors de mon test, le 7 novembre 2026.
+- https://foodbrats.com/bluetooth-mesh-technology-bluetooth-mesh/
